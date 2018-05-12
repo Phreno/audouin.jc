@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 600" width="600" height="600">
+
+
+  <defs>
+    <filter id="filter" >
+      <feGaussianBlur in="SourceGraphic" stdDeviation="50"/>
+    </filter>
+  </defs>
+
+  <circle cx="250" cy="250" r="200"
+    fill="rgba(5,0,0,0.7)"
+    stroke-width="20" stroke="rgba(0,0,0,0.8)" filter="#filter"/>
+</svg>

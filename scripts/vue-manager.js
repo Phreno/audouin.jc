@@ -3,9 +3,9 @@ let application = new Vue({
   el: "#application",
   data: {
     view: {
-      title: "Titre de la page",
-      heading: "En-tête de la page",
-      subHeading: "Sous-titre de la page",
+      title: "Jean-Claude Audouin",
+      heading: "Guitariste",
+      subHeading: "Compositeur, Chef de choeur",
       home: "Accueil",
       readMore: "Lire plus ...",
       search: "Recherche",
@@ -27,11 +27,24 @@ let application = new Vue({
         console.log("inf: récupération des articles")
         console.log(data)
 
-        this.values.articles = data
+        this.values.articles = data.map((item) => {
+          let sandbox = document.createElement("div");
+          sandbox.innerHTML = item.articleBody;
+          item.articleBodySanitized = (
+            sandbox.textContent ||
+            sandbox.innerText ||
+            ""
+          )
+          return item
+        })
       })
   },
   computed: {
-
+    articleFilter() {
+      return this.values.articles.filter(item => {
+        return item.articleBody.match(this.values.search)
+      })
+    }
   },
   methods: {}
 })
