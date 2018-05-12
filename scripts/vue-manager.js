@@ -13,7 +13,8 @@ let application = new Vue({
     },
     values: {
       selected: "main",
-      articles: []
+      articles: [],
+      search: ""
     }
   },
   created() {
@@ -29,7 +30,9 @@ let application = new Vue({
         this.values.articles = data
       })
   },
-  computed: {},
+  computed: {
+
+  },
   methods: {}
 })
 
