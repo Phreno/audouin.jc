@@ -30,7 +30,7 @@
           <a class="navbar-brand"
              href="#"
              v-text="view.title"
-             @click="values.selected='main'"></a>
+             @click="goto('main')"></a>
           <button class="navbar-toggler"
                   type="button"
                   data-toggle="collapse"
@@ -44,16 +44,16 @@
                id="navbarResponsive">
             <ul class="navbar-nav ml-auto">
               <li class="nav-item"
-                  :class="{active:('main'===values.selected)}">
+                  :class="{ active: ( isHomeTab ) }">
                 <a class="nav-link"
-                   @click="values.selected='main'"
+                   @click="goto('main')"
                    v-text="view.home"></a>
               </li>
               <li class="nav-item"
-                  :class="{active:(article === values.selected)}"
+                  :class="{ active: ( article === values.selected ) }"
                   v-for="article of values.articles">
                 <a class="nav-link"
-                   @click="values.selected=article"
+                   @click="goto(article)"
                    v-text="article.action"></a>
               </li>
             </ul>
@@ -64,112 +64,107 @@
       <div id="articleContainer"
            class="container bg-light shadow-lg">
         <div class="row">
-          <!-- HOME -->
-          <div class="col-md-8 bg-white"
-               v-if="'main' === values.selected">
-            <h1 class="my-4"> {{ view.heading }}
-              <small v-text="view.subHeading"></small>
-            </h1>
-            <div class="card mb-5"
-                 v-for="article of articleFilter">
-              <img class="card-img-top"
-                   :src="article.image"
-                   alt="Card image cap">
-              <div class="card-body">
-                <p class="card-text text-right"
-                   v-html="article.imageBadge"></p>
-                <h2 class="card-title"
-                    v-text="article.headline"></h2>
-                <p class="card-text"
-                   v-text="article.articleBodySanitized.substring(0, 300)+'...'"></p>
-                <a href="#"
-                   class="btn btn-primary"
-                   @click="values.selected = article"
-                   v-text="view.readMore"></a>
-              </div>
-              <div class="card-footer text-muted"> Posted on {{article.datePublished}} by
-                <a href="#"
-                   v-text="article.author"></a>
-              </div>
-            </div>
-          </div>
-          <!-- /HOME -->
-          <!-- ERROR -->
-          <div class="col-md-8 bg-white"
-               v-if="0 === articleFilter.length && 'main' === values.selected">
-            <!-- <h1 class="my-4"> {{ view.heading }}
-              <small v-text="view.subHeading"></small>
-            </h1> -->
-            <div class="card mb-5 border border-danger text-danger">
-              <img class="card-img-top"
-                   src="./pics/error.jpg"
-                   alt="Card image cap">
-              <div class="card-body">
-                <p class="card-text text-right">
-                  <a style="background-color:black;color:white;text-decoration:none;padding:4px 6px;font-family:-apple-system, BlinkMacSystemFont, &quot;San Francisco&quot;, &quot;Helvetica Neue&quot;, Helvetica, Ubuntu, Roboto, Noto, &quot;Segoe UI&quot;, Arial, sans-serif;font-size:12px;font-weight:bold;line-height:1.2;display:inline-block;border-radius:3px;"
-                
-                     href="https://unsplash.com/@braydona?utm_medium=referral&amp;utm_campaign=photographer-credit&amp;utm_content=creditBadge"
-                     target="_blank"
-                     rel="noopener noreferrer"
-                     title="Download free do whatever you want high-resolution photos from Braydon Anderson">
-                    <span style="display:inline-block;padding:2px 3px;">
-                      <svg xmlns="http://www.w3.org/2000/svg"
-                           style="height:12px;width:auto;position:relative;vertical-align:middle;top:-1px;fill:white;"
-                           viewBox="0 0 32 32">
-                        <title>unsplash-logo</title>
-                        <path d="M20.8 18.1c0 2.7-2.2 4.8-4.8 4.8s-4.8-2.1-4.8-4.8c0-2.7 2.2-4.8 4.8-4.8 2.7.1 4.8 2.2 4.8 4.8zm11.2-7.4v14.9c0 2.3-1.9 4.3-4.3 4.3h-23.4c-2.4 0-4.3-1.9-4.3-4.3v-15c0-2.3 1.9-4.3 4.3-4.3h3.7l.8-2.3c.4-1.1 1.7-2 2.9-2h8.6c1.2 0 2.5.9 2.9 2l.8 2.4h3.7c2.4 0 4.3 1.9 4.3 4.3zm-8.6 7.5c0-4.1-3.3-7.5-7.5-7.5-4.1 0-7.5 3.4-7.5 7.5s3.3 7.5 7.5 7.5c4.2-.1 7.5-3.4 7.5-7.5z"></path>
-                      </svg>
-                    </span>
-                    <span style="display:inline-block;padding:2px 3px;">Braydon Anderson</span>
-                  </a>
-                </p>
-                <h2 class="card-title"> Oups! </h2>
-                <p class="card-text"> Aucun article n'est actuellement disponible.
-                  <hr> Si vous effectuez une recherche, vous pouvez modifier votre saisie pour améliorer les résultats</p>
-                <a href="#"
-                   class="btn btn-primary"
-                   @click="values.search = ''"> Revenir à l'accueil</a>
-              </div>
-            </div>
-          </div>
-          <!-- /ERROR -->
-          <!-- SIDEBAR -->
-          <div class="col-md-4 border-left border-muted"
-               v-if="'main' === values.selected">
-            <ul class="navbar-nav m-5 position-fixed">
-              <li class="nav-item"
-                  :class="{ active: ( 'main' === values.selected ) }">
-                <a class="nav-link"
-                   @click="values.selected='main'"
-                   v-text="view.home"
-                   style="cursor:pointer"
-                   :style="{ fontWeight: ('main' === values.selected ) ? 'bold': '' }"></a>
-              </li>
-              <li class="nav-item"
-                  :class="{ active: ( article === values.selected ) }"
-                  v-for="article of values.articles">
-                <a class="nav-link"
-                   @click="values.selected=article"
-                   v-text="article.action"
-                   style="cursor:pointer"
-                   :style="{ fontWeight: ( article === values.selected ) ? 'bold': '' }"></a>
-              </li>
-              <li>
-                <div class="input-group mt-5"
-                     v-if="'main' === values.selected">
-                  <input type="text"
-                         class="form-control"
-                         :placeholder="view.searchPlaceholder"
-                         v-model="values.search">
-                  <span class="input-group-btn"> </span>
+          <template v-if="isHomeTab">
+            <!-- HOME -->
+            <div v-if="!isEmpty"
+                 class="col-md-8 bg-white mt-3">
+              <div class="card mb-5"
+                   v-for="article of articleFilter">
+                <img class="card-img-top"
+                     :src="article.image"
+                     alt="Card image cap">
+                <div class="card-body">
+                  <p class="card-text text-right"
+                     v-html="article.imageBadge"></p>
+                  <h2 class="card-title"
+                      v-text="article.headline"></h2>
+                  <p class="card-text"
+                     v-text="article.articleBodySanitized.substring(0, 300)+'...'"></p>
+                  <a href="#"
+                     class="btn btn-primary"
+                     @click="goto(article)"
+                     v-text="view.readMore"></a>
                 </div>
-              </li>
-            </ul>
-          </div>
-          <!-- /SIDEBAR -->
+                <div class="card-footer text-muted"> Posted on {{article.datePublished}} by
+                  <a href="#"
+                     v-text="article.author"></a>
+                </div>
+              </div>
+            </div>
+            <!-- /HOME -->
+            <!-- ERROR -->
+            <div v-if="isEmpty"
+                 class="col-md-8 bg-danger">
+              <div class="card mb-5 mt-2">
+                <img class="card-img-top"
+                     src="./pics/error.jpg"
+                     alt="Card image cap">
+                <div class="card-body">
+                  <p class="card-text text-right">
+                    <a style="background-color:black;color:white;text-decoration:none;padding:4px 6px;font-family:-apple-system, BlinkMacSystemFont, &quot;San Francisco&quot;, &quot;Helvetica Neue&quot;, Helvetica, Ubuntu, Roboto, Noto, &quot;Segoe UI&quot;, Arial, sans-serif;font-size:12px;font-weight:bold;line-height:1.2;display:inline-block;border-radius:3px;"
+                  
+                       href="https://unsplash.com/@braydona?utm_medium=referral&amp;utm_campaign=photographer-credit&amp;utm_content=creditBadge"
+                       target="_blank"
+                       rel="noopener noreferrer"
+                       title="Download free do whatever you want high-resolution photos from Braydon Anderson">
+                      <span style="display:inline-block;padding:2px 3px;">
+                        <svg xmlns="http://www.w3.org/2000/svg"
+                             style="height:12px;width:auto;position:relative;vertical-align:middle;top:-1px;fill:white;"
+                             viewBox="0 0 32 32">
+                          <title>unsplash-logo</title>
+                          <path d="M20.8 18.1c0 2.7-2.2 4.8-4.8 4.8s-4.8-2.1-4.8-4.8c0-2.7 2.2-4.8 4.8-4.8 2.7.1 4.8 2.2 4.8 4.8zm11.2-7.4v14.9c0 2.3-1.9 4.3-4.3 4.3h-23.4c-2.4 0-4.3-1.9-4.3-4.3v-15c0-2.3 1.9-4.3 4.3-4.3h3.7l.8-2.3c.4-1.1 1.7-2 2.9-2h8.6c1.2 0 2.5.9 2.9 2l.8 2.4h3.7c2.4 0 4.3 1.9 4.3 4.3zm-8.6 7.5c0-4.1-3.3-7.5-7.5-7.5-4.1 0-7.5 3.4-7.5 7.5s3.3 7.5 7.5 7.5c4.2-.1 7.5-3.4 7.5-7.5z"></path>
+                        </svg>
+                      </span>
+                      <span style="display:inline-block;padding:2px 3px;">Braydon Anderson</span>
+                    </a>
+                  </p>
+                  <h2 class="card-title text-danger"> Oups! </h2>
+                  <p class="card-text"> Aucun article n'est actuellement disponible.</p>
+                  <hr>
+                  <p class="card-text text-body">Si vous effectuez une recherche, vous pouvez modifier votre saisie pour améliorer les résultats</p>
+                  <a class="btn btn-primary text-white"
+                     @click="goto('main')"> Revenir à l'accueil</a>
+                </div>
+              </div>
+            </div>
+            <!-- /ERROR -->
+            <!-- SIDEBAR -->
+            <div class="col-md-4 border-left border-muted">
+              <ul class="navbar-nav m-5 position-fixed">
+                <li :class="{ active: ( isHomeTab ) }"
+                    class="nav-item">
+                  <a @click="goto('main')"
+                     class="nav-link"
+                     v-text="view.home"
+                     style="cursor:pointer"
+                     :style="{ fontWeight: ( isHomeTab ) ? 'bold': '' }"></a>
+                </li>
+                <li v-for="article of values.articles"
+                    class="nav-item"
+                    :class="{ active: ( article === values.selected ) }">
+                  <a @click="goto(article)"
+                     class="nav-link"
+                     v-text="article.action"
+                     style="cursor:pointer"
+                     :style="{ fontWeight: ( article === values.selected ) ? 'bold': '' }"></a>
+                </li>
+                <li>
+                  <div v-if="isHomeTab"
+                       class="input-group mt-5">
+                    <input v-model="values.search"
+                           type="text"
+                           class="form-control"
+                           :placeholder="view.searchPlaceholder">
+                    <span class="input-group-btn"> </span>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <!-- /SIDEBAR -->
+          </template>
           <!-- ARTICLE DETAIL -->
-          <div class="col-md-12"
-               v-else>
+          <div v-else
+               class="col-md-12">
             <div class="card mb-5 mt-3">
               <img class="card-img-top"
                    :src="values.selected.image"
@@ -185,7 +180,7 @@
                    v-html="values.selected.articleBody"></p>
                 <a href="#"
                    class="btn btn-primary"
-                   @click="values.selected = 'main'"
+                   @click="goto('main')"
                    v-text="view.home">&rarr;</a>
               </div>
               <div class="card-footer text-muted"> Posted on {{ values.selected.datePublished }} by

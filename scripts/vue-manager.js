@@ -46,9 +46,27 @@ let application = new Vue({
       return this.values.articles.filter(item => {
         return item.articleBody.match(this.values.search)
       })
+    },
+    isHomeTab() {
+      return 'main' === this.values.selected
+    },
+    isEmpty() {
+      return 0 === this.articleFilter.length
     }
   },
-  methods: {}
+  methods: {
+    goto(selection) {
+      let empty = ''
+      if (selection) {
+        console.log("inf: nouvel onglet ouvert")
+        console.log(selection)
+        this.values.search = empty
+        this.values.selected = selection
+      } else {
+        console.error("err: action inconnue")
+      }
+    }
+  }
 })
 
 console.log(application)
