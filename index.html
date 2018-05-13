@@ -27,9 +27,9 @@
       <!-- NAVIGATION -->
       <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top border-bottom border-secondary shadow-lg">
         <div class="container">
-          <a class="navbar-brand"
-             href="#"
+          <a class="navbar-brand text-white"
              v-text="view.title"
+             style="cursor:pointer"
              @click="goto('main')"></a>
           <button class="navbar-toggler"
                   type="button"
@@ -46,6 +46,7 @@
               <li class="nav-item"
                   :class="{ active: ( isHomeTab ) }">
                 <a class="nav-link"
+                   style="cursor:pointer"
                    @click="goto('main')"
                    v-text="view.home"></a>
               </li>
@@ -53,6 +54,7 @@
                   :class="{ active: ( article === values.selected ) }"
                   v-for="article of values.articles">
                 <a class="nav-link"
+                   style="cursor:pointer"
                    @click="goto(article)"
                    v-text="article.action"></a>
               </li>
@@ -73,21 +75,21 @@
                 <img class="card-img-top"
                      :src="article.image"
                      alt="Card image cap">
-                <div class="card-body">
+                <div class="card-img-overlay">
                   <p class="card-text text-right"
                      v-html="article.imageBadge"></p>
+                </div>
+                <div class="card-body">
                   <h2 class="card-title"
                       v-text="article.headline"></h2>
                   <p class="card-text"
                      v-text="article.articleBodySanitized.substring(0, 300)+'...'"></p>
-                  <a href="#"
-                     class="btn btn-primary"
+                  <a class="btn btn-primary"
                      @click="goto(article)"
                      v-text="view.readMore"></a>
                 </div>
                 <div class="card-footer text-muted"> Posted on {{article.datePublished}} by
-                  <a href="#"
-                     v-text="article.author"></a>
+                  <a v-text="article.author"></a>
                 </div>
               </div>
             </div>
@@ -99,7 +101,7 @@
                 <img class="card-img-top"
                      src="./pics/error.jpg"
                      alt="Card image cap">
-                <div class="card-body">
+                <div class="card-img-overlay">
                   <p class="card-text text-right">
                     <a style="background-color:black;color:white;text-decoration:none;padding:4px 6px;font-family:-apple-system, BlinkMacSystemFont, &quot;San Francisco&quot;, &quot;Helvetica Neue&quot;, Helvetica, Ubuntu, Roboto, Noto, &quot;Segoe UI&quot;, Arial, sans-serif;font-size:12px;font-weight:bold;line-height:1.2;display:inline-block;border-radius:3px;"
                   
@@ -118,6 +120,8 @@
                       <span style="display:inline-block;padding:2px 3px;">Braydon Anderson</span>
                     </a>
                   </p>
+                </div>
+                <div class="card-body">
                   <h2 class="card-title text-danger"> Oups! </h2>
                   <p class="card-text"> Aucun article n'est actuellement disponible.</p>
                   <hr>
@@ -176,24 +180,24 @@
             <div class="card mb-5 mt-3">
               <img class="card-img-top"
                    :src="values.selected.image"
-                   alt="Card image cap">
-              <div class="card-body">
+                   alt="values.selected.action">
+              <div class="card-img-overlay">
                 <p class="card-text text-right"
                    v-html="values.selected.imageBadge"></p>
+              </div>
+              <div class="card-body">
                 <h2 class="card-title"
                     v-text="values.selected.headline"></h2>
                 <h3 class="card-title"
                     v-text="values.selected.alternativeHeadline"></h3>
                 <p class="card-text"
                    v-html="values.selected.articleBody"></p>
-                <a href="#"
-                   class="btn btn-primary"
+                <a class="btn btn-primary"
                    @click="goto('main')"
-                   v-text="view.home">&rarr;</a>
+                   v-text="view.home"></a>
               </div>
               <div class="card-footer text-muted"> Posted on {{ values.selected.datePublished }} by
-                <a href="#"
-                   v-text="values.selected.author"></a>
+                <a v-text="values.selected.author"></a>
               </div>
             </div>
           </div>
