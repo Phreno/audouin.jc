@@ -9,7 +9,8 @@ let application = new Vue({
       home: "Accueil",
       readMore: "Lire plus ...",
       search: "Recherche",
-      searchPlaceholder: "Recherche ..."
+      searchPlaceholder: "Recherche ...",
+      menu: "Menu"
     },
     values: {
       selected: "main",
