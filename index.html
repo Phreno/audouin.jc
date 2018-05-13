@@ -124,7 +124,7 @@
           <!-- SIDEBAR -->
           <div class="col-md-4"
                v-if="'main' === values.selected">
-            <ul class="navbar-nav ml-auto">
+            <ul class="navbar-nav m-5 position-fixed">
               <li class="nav-item"
                   :class="{ active: ( 'main' === values.selected ) }">
                 <a class="nav-link"
@@ -143,7 +143,7 @@
                    :style="{ fontWeight: ( article === values.selected ) ? 'bold': '' }"></a>
               </li>
               <li>
-                <div class="input-group"
+                <div class="input-group mt-5"
                      v-if="'main' === values.selected">
                   <input type="text"
                          class="form-control"
