@@ -23,6 +23,7 @@
   <body>
     <div id="application"
          class="bg-dark">
+      <!-- NAVIGATION -->
       <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top border-bottom border-secondary shadow-lg">
         <div class="container">
           <a class="navbar-brand"
@@ -58,16 +59,16 @@
           </div>
         </div>
       </nav>
+      <!-- MAIN CONTAINER -->
       <div id="articleContainer"
            class="container bg-light shadow-lg">
         <div class="row">
+          <!-- HOME -->
           <div class="col-md-8"
                v-if="'main' === values.selected">
-            <!-- En-tête de la page -->
             <h1 class="my-4"> {{ view.heading }}
               <small v-text="view.subHeading"></small>
             </h1>
-            <!-- Blog Post -->
             <div class="card mb-4"
                  v-for="article of articleFilter">
               <img class="card-img-top"
@@ -91,6 +92,8 @@
               </div>
             </div>
           </div>
+          <!-- /HOME -->
+          <!-- ARTICLE DETAIL -->
           <div class="col-md-12"
                v-else>
             <div class="card mb-4 ">
@@ -117,43 +120,43 @@
               </div>
             </div>
           </div>
+          <!-- /ARTICLE DETAIL -->
+          <!-- SIDEBAR -->
           <div class="col-md-4"
                v-if="'main' === values.selected">
-            <div class="card my-4 position-fixed">
-              <div class="card-body">
-                <ul class="navbar-nav ml-auto">
-                  <li class="nav-item"
-                      :class="{ active: ( 'main' === values.selected ) }">
-                    <a class="nav-link"
-                       @click="values.selected='main'"
-                       v-text="view.home"
-                       style="cursor:pointer"
-                       :style="{ fontWeight: ('main' === values.selected ) ? 'bold': '' }"></a>
-                  </li>
-                  <li class="nav-item"
-                      :class="{ active: ( article === values.selected ) }"
-                      v-for="article of values.articles">
-                    <a class="nav-link"
-                       @click="values.selected=article"
-                       v-text="article.action"
-                       style="cursor:pointer"
-                       :style="{ fontWeight: ( article === values.selected ) ? 'bold': '' }"></a>
-                  </li>
-                </ul>
-              </div>
-              <div class="card-body"
-                   v-if="'main' === values.selected">
-                <div class="input-group">
+            <ul class="navbar-nav ml-auto">
+              <li class="nav-item"
+                  :class="{ active: ( 'main' === values.selected ) }">
+                <a class="nav-link"
+                   @click="values.selected='main'"
+                   v-text="view.home"
+                   style="cursor:pointer"
+                   :style="{ fontWeight: ('main' === values.selected ) ? 'bold': '' }"></a>
+              </li>
+              <li class="nav-item"
+                  :class="{ active: ( article === values.selected ) }"
+                  v-for="article of values.articles">
+                <a class="nav-link"
+                   @click="values.selected=article"
+                   v-text="article.action"
+                   style="cursor:pointer"
+                   :style="{ fontWeight: ( article === values.selected ) ? 'bold': '' }"></a>
+              </li>
+              <li>
+                <div class="input-group"
+                     v-if="'main' === values.selected">
                   <input type="text"
                          class="form-control"
                          :placeholder="view.searchPlaceholder"
                          v-model="values.search">
                   <span class="input-group-btn"> </span>
                 </div>
-              </div>
-            </div>
+              </li>
+            </ul>
           </div>
+          <!-- /SIDEBAR -->
         </div>
+        <!-- FOOTER -->
         <nav class="bg-dark fixed-bottom border-top border-secondary shadow-lg">
           <p class="m-0 mr-5 text-right text-white"
              v-text="view.copyright"></p>
