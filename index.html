@@ -23,7 +23,7 @@
   <body>
     <!-- APPLICATION -->
     <div id="application"
-         style="background:url('./pics/wooden-bg.svg'); background-color: #220606">
+         style="background:url('./pics/wooden-bg.svg'); background-color: #2C1511">
       <!-- NAVIGATION -->
       <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top border-bottom border-secondary shadow-lg">
         <div class="container">
@@ -65,7 +65,7 @@
            class="container bg-light shadow-lg">
         <div class="row">
           <!-- HOME -->
-          <div class="col-md-8"
+          <div class="col-md-8 bg-white"
                v-if="'main' === values.selected">
             <h1 class="my-4"> {{ view.heading }}
               <small v-text="view.subHeading"></small>
@@ -123,7 +123,7 @@
           </div>
           <!-- /ARTICLE DETAIL -->
           <!-- SIDEBAR -->
-          <div class="col-md-4"
+          <div class="col-md-4 border-left border-muted"
                v-if="'main' === values.selected">
             <ul class="navbar-nav m-5 position-fixed">
               <li class="nav-item"
