@@ -10,7 +10,8 @@ let application = new Vue({
       readMore: "Lire plus ...",
       search: "Recherche",
       searchPlaceholder: "Recherche ...",
-      menu: "Menu"
+      menu: "Menu",
+      copyright: "Copyright © Jean-Claude Audouin 2018"
     },
     values: {
       selected: "main",

@@ -23,10 +23,8 @@
   <body>
     <div id="application"
          class="bg-dark">
-      <!-- Navigation -->
       <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top border-bottom border-secondary shadow-lg">
         <div class="container">
-          <!-- Titre de la page -->
           <a class="navbar-brand"
              href="#"
              v-text="view.title"
@@ -46,23 +44,23 @@
               <li class="nav-item"
                   :class="{active:('main'===values.selected)}">
                 <a class="nav-link"
-                   @click="values.selected='main'"> {{ view.home }} </a>
+                   @click="values.selected='main'"
+                   v-text="view.home"></a>
               </li>
               <li class="nav-item"
                   :class="{active:(article === values.selected)}"
                   v-for="article of values.articles">
                 <a class="nav-link"
-                   @click="values.selected=article"> {{article.action}} </a>
+                   @click="values.selected=article"
+                   v-text="article.action"></a>
               </li>
             </ul>
           </div>
         </div>
       </nav>
-      <!-- Page Content -->
       <div id="articleContainer"
            class="container bg-light shadow-lg">
         <div class="row">
-          <!-- Blog Entries Column -->
           <div class="col-md-8"
                v-if="'main' === values.selected">
             <!-- En-tête de la page -->
@@ -93,10 +91,8 @@
               </div>
             </div>
           </div>
-          <!-- Article detail -->
           <div class="col-md-12"
                v-else>
-            <!-- Blog Post -->
             <div class="card mb-4 ">
               <img class="card-img-top"
                    :src="values.selected.image"
@@ -115,38 +111,35 @@
                    @click="values.selected = 'main'"
                    v-text="view.home">&rarr;</a>
               </div>
-              <div class="card-footer text-muted"> Posted on {{values.selected.datePublished}} by
+              <div class="card-footer text-muted"> Posted on {{ values.selected.datePublished }} by
                 <a href="#"
                    v-text="values.selected.author"></a>
               </div>
             </div>
           </div>
-          <!-- Sidebar Widgets Column -->
           <div class="col-md-4"
                v-if="'main' === values.selected">
-            <!-- Search Widget -->
             <div class="card my-4 position-fixed">
               <div class="card-body">
                 <ul class="navbar-nav ml-auto">
                   <li class="nav-item"
-                      :class="{active:('main'===values.selected)}">
+                      :class="{ active: ( 'main' === values.selected ) }">
                     <a class="nav-link"
                        @click="values.selected='main'"
                        v-text="view.home"
                        style="cursor:pointer"
-                       :style="{fontWeight: ('main' === values.selected)? 'bold': ''}"></a>
+                       :style="{ fontWeight: ('main' === values.selected ) ? 'bold': '' }"></a>
                   </li>
                   <li class="nav-item"
-                      :class="{active:(article === values.selected)}"
+                      :class="{ active: ( article === values.selected ) }"
                       v-for="article of values.articles">
                     <a class="nav-link"
                        @click="values.selected=article"
                        v-text="article.action"
                        style="cursor:pointer"
-                       :style="{fontWeight: (article === values.selected)? 'bold': ''}"></a>
+                       :style="{ fontWeight: ( article === values.selected ) ? 'bold': '' }"></a>
                   </li>
                 </ul>
-                <!--  -->
               </div>
               <div class="card-body"
                    v-if="'main' === values.selected">
@@ -162,10 +155,10 @@
           </div>
         </div>
         <nav class="bg-dark fixed-bottom border-top border-secondary shadow-lg">
-          <p class="m-0 mr-5 text-right text-white">Copyright &copy; Jean-Claude Audouin 2018</p>
+          <p class="m-0 mr-5 text-right text-white"
+             v-text="view.copyright"></p>
         </nav>
       </div>
-      <!-- Bootstrap core JavaScript -->
       <script src="vendor/jquery/jquery.min.js"></script>
       <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
       <script src="./scripts/vue-manager.js"
