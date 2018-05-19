@@ -21,25 +21,34 @@ let application = new Vue({
   },
   created() {
     console.log("inf: le composant est créé")
-    let query = {
-      url: "http://localhost:3000/api/articles"
-    }
-    $.ajax(query)
-      .done((data) => {
-        console.log("inf: récupération des articles")
-        console.log(data)
 
-        this.values.articles = data.map((item) => {
-          let sandbox = document.createElement("div");
-          sandbox.innerHTML = item.articleBody;
-          item.articleBodySanitized = (
-            sandbox.textContent ||
-            sandbox.innerText ||
-            ""
-          )
-          return item
+    let mapper = (item) => {
+      let sandbox = document.createElement("div");
+      sandbox.innerHTML = item.articleBody;
+      item.articleBodySanitized = (
+        sandbox.textContent ||
+        sandbox.innerText ||
+        ""
+      )
+      return item
+    }
+
+    if (DATA) {
+      console.log("inf: utilisation des données locales")
+      this.values.articles = DATA.map(mapper)
+    } else {
+      console.log("inf: utilisation des données en base")
+      let query = {
+        url: "http://localhost:3000/api/articles"
+      }
+
+      $.ajax(query)
+        .done((data) => {
+          console.log("inf: récupération des articles")
+          console.log(data)
+          this.values.articles = data.map(mapper)
         })
-      })
+    }
   },
   computed: {
     articleFilter() {
